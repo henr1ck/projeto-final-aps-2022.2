@@ -11,7 +11,7 @@ using ProjetoFinal.Models;
 namespace ProjetoFinal.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20221205112835_InitialCreate")]
+    [Migration("20221207111907_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,13 +21,32 @@ namespace ProjetoFinal.Migrations
                 .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("ProjetoFinal.Models.Categoria", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("descricao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("nome")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("id");
+
+                    b.ToTable("categoria");
+                });
+
             modelBuilder.Entity("ProjetoFinal.Models.Consumidor", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("dataNasc")
+                    b.Property<DateOnly>("dataNascimento")
                         .HasColumnType("date");
 
                     b.Property<string>("nome")
@@ -37,6 +56,29 @@ namespace ProjetoFinal.Migrations
                     b.HasKey("id");
 
                     b.ToTable("consumidor");
+                });
+
+            modelBuilder.Entity("ProjetoFinal.Models.Fornecedor", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("cnpj")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("nomeFantasia")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("razaoSocial")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("id");
+
+                    b.ToTable("fornecedor");
                 });
 
             modelBuilder.Entity("ProjetoFinal.Models.Pagamento", b =>
@@ -89,9 +131,15 @@ namespace ProjetoFinal.Migrations
                     b.Property<int?>("Pedidoid")
                         .HasColumnType("int");
 
-                    b.Property<string>("desc")
+                    b.Property<int>("categoriaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("descricao")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("fornecedorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("nome")
                         .IsRequired()
@@ -103,6 +151,10 @@ namespace ProjetoFinal.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("Pedidoid");
+
+                    b.HasIndex("categoriaId");
+
+                    b.HasIndex("fornecedorId");
 
                     b.ToTable("produto");
                 });
@@ -154,6 +206,22 @@ namespace ProjetoFinal.Migrations
                     b.HasOne("ProjetoFinal.Models.Pedido", null)
                         .WithMany("produtos")
                         .HasForeignKey("Pedidoid");
+
+                    b.HasOne("ProjetoFinal.Models.Categoria", "categoria")
+                        .WithMany()
+                        .HasForeignKey("categoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjetoFinal.Models.Fornecedor", "fornecedor")
+                        .WithMany()
+                        .HasForeignKey("fornecedorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("categoria");
+
+                    b.Navigation("fornecedor");
                 });
 
             modelBuilder.Entity("ProjetoFinal.Models.Pedido", b =>

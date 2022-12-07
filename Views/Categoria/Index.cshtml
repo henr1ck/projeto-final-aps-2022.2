@@ -1,4 +1,4 @@
-@model IEnumerable<ProjetoFinal.Models.Produto>
+@model IEnumerable<ProjetoFinal.Models.Categoria>
 
 @{
     ViewData["Title"] = "Index";
@@ -18,15 +18,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.descricao)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.valor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.fornecedor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.categoria)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -38,15 +29,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fornecedor.id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.categoria.id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |

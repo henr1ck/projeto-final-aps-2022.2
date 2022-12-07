@@ -14,6 +14,7 @@ namespace ProjetoFinal.Models
         public DbSet<Credito> credito {get; set;}
         public DbSet<Consumidor> consumidor {get; set;}
         public DbSet<Boleto> boleto {get; set;}
-
+        public DbSet<Fornecedor> fornecedor {get; set;}
+        public DbSet<Categoria> categoria {get; set;}
     }
 }

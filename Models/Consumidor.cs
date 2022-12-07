@@ -4,6 +4,6 @@ namespace ProjetoFinal.Models
     {
         public int id { get; set; }
         public string nome { get; set; }
-        public DateOnly dataNasc { get; set; }
+        public DateOnly dataNascimento { get; set; }
     }
 }

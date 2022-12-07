@@ -10,22 +10,22 @@ using ProjetoFinal.Models;
 
 namespace ProjetoFinal.Controllers
 {
-    public class ConsumidorController : Controller
+    public class CategoriaController : Controller
     {
         private readonly MyDbContext _context;
 
-        public ConsumidorController(MyDbContext context)
+        public CategoriaController(MyDbContext context)
         {
             _context = context;
         }
 
-        // GET: Consumidor
+        // GET: Categoria
         public async Task<IActionResult> Index()
         {
-            return View(await _context.consumidor.ToListAsync());
+            return View(await _context.categoria.ToListAsync());
         }
 
-        // GET: Consumidor/Details/5
+        // GET: Categoria/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace ProjetoFinal.Controllers
                 return NotFound();
             }
 
-            var consumidor = await _context.consumidor
+            var categoria = await _context.categoria
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (consumidor == null)
+            if (categoria == null)
             {
                 return NotFound();
             }
 
-            return View(consumidor);
+            return View(categoria);
         }
 
-        // GET: Consumidor/Create
+        // GET: Categoria/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Consumidor/Create
+        // POST: Categoria/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nome,dataNascimento")] Consumidor consumidor)
+        public async Task<IActionResult> Create([Bind("id,nome,descricao")] Categoria categoria)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(consumidor);
+                _context.Add(categoria);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(consumidor);
+            return View(categoria);
         }
 
-        // GET: Consumidor/Edit/5
+        // GET: Categoria/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ProjetoFinal.Controllers
                 return NotFound();
             }
 
-            var consumidor = await _context.consumidor.FindAsync(id);
-            if (consumidor == null)
+            var categoria = await _context.categoria.FindAsync(id);
+            if (categoria == null)
             {
                 return NotFound();
             }
-            return View(consumidor);
+            return View(categoria);
         }
 
-        // POST: Consumidor/Edit/5
+        // POST: Categoria/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nome,dataNascimento")] Consumidor consumidor)
+        public async Task<IActionResult> Edit(int id, [Bind("id,nome,descricao")] Categoria categoria)
         {
-            if (id != consumidor.id)
+            if (id != categoria.id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ProjetoFinal.Controllers
             {
                 try
                 {
-                    _context.Update(consumidor);
+                    _context.Update(categoria);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ConsumidorExists(consumidor.id))
+                    if (!CategoriaExists(categoria.id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ProjetoFinal.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(consumidor);
+            return View(categoria);
         }
 
-        // GET: Consumidor/Delete/5
+        // GET: Categoria/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ProjetoFinal.Controllers
                 return NotFound();
             }
 
-            var consumidor = await _context.consumidor
+            var categoria = await _context.categoria
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (consumidor == null)
+            if (categoria == null)
             {
                 return NotFound();
             }
 
-            return View(consumidor);
+            return View(categoria);
         }
 
-        // POST: Consumidor/Delete/5
+        // POST: Categoria/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var consumidor = await _context.consumidor.FindAsync(id);
-            _context.consumidor.Remove(consumidor);
+            var categoria = await _context.categoria.FindAsync(id);
+            _context.categoria.Remove(categoria);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ConsumidorExists(int id)
+        private bool CategoriaExists(int id)
         {
-            return _context.consumidor.Any(e => e.id == id);
+            return _context.categoria.Any(e => e.id == id);
         }
     }
 }
